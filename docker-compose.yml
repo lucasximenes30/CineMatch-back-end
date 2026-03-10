@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:17
+    container_name: postgres_ai_project
+    restart: always
+    environment:
+      POSTGRES_DB: dbcinematch
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+volumes:
+  postgres_data:
+
+networks:
+  my_network:
+    driver: bridge
