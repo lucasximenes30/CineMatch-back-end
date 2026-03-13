@@ -7,6 +7,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 import lombok.Data;
 import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +20,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "movie")
 @ToString(exclude = "reviews")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Movie {
 
     @Id

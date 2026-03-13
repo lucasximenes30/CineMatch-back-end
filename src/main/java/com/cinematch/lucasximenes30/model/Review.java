@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,6 +15,9 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "review")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Review {
 
     @Id
