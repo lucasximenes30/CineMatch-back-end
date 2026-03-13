@@ -2,14 +2,21 @@ package com.cinematch.lucasximenes30.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.ToString;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
-
 
 @Data
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuario", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "email", name = "uk_user_email")
+})
+@ToString(exclude = "reviews")
 public class User {
 
     @Id
@@ -18,14 +25,37 @@ public class User {
     private UUID id;
 
     @NotNull
-    @Column(name = "name")
+    @Size(min = 3, max = 100)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotNull
-    @Column(name = "email")
+    @Email
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @NotNull
-    @Column(name = "password")
+    @Size(min = 6)
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Review> reviews;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }
